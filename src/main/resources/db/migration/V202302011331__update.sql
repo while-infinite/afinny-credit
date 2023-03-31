@@ -1,0 +1,2 @@
+ALTER TABLE credit
+ALTER COLUMN credit_limit DROP NOT NULL

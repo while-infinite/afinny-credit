@@ -1,0 +1,49 @@
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=MySQL;DATABASE_TO_LOWER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+  flyway:
+    enabled: false
+
+  h2:
+    console:
+      enabled: false
+      settings:
+        web-allow-others: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKERS:localhost:9092}
+  cloud:
+    discovery:
+      enabled: false
+
+# Custom Kafka
+kafka:
+  kafka-properties:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+  topics:
+    new-pin-code-card-producer:
+      path: "credit_to_master_update_pin"
+      enabled: true
+    user-service-listener:
+      path: "test"
+      enabled: true
+    card-status-listener:
+      path: "test"
+      enabled: true
+    bank-system-listener:
+      path: "test"
+      enabled: true
+  bootstrap-servers: ${KAFKA_BROKERS:localhost:9092}
